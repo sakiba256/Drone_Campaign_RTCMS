@@ -45,7 +45,8 @@ I've used Playwright to do this Automation.
 8. System Permissions:
  Ensure your system allows Node.js and browser processes to run without restrictions.
 
-Additionally, you will need to set your username and password in the logIn.spec.js .
+Additionally, you will need to set your username and password in the logIn.spec.js
+
  For run the script with UI Mode (Headed):
 
       set  headless: false, // Set to false for UI mode in main.spec.js
