@@ -1,4 +1,12 @@
 # Drone_Campaign_RTCMS
+Full Automation Steps in RT CMS
+ 1. Login to RT CMS portal
+ 2. Go to Audience Builder, create and submit audience
+ 3. Go to Drone Admin Tab, create all combinations with created Audience ID and validate existing combinations
+ 4. Go to Drone Campaign Tab, create required campaigns and validating after submit the campaign
+
+I've used Playwright to do this Automation.
+# Playwright Configuration
  The prerequisites for Playwright are as follows:
 
 1. Operating System:
@@ -35,8 +43,11 @@ Environment Variables: Use a package like dotenv to manage sensitive data such a
 Ensure your system allows Node.js and browser processes to run without restrictions.
 
 Additionally, you will need to set your username and password in the logIn.spec.js .
-For run the script with UI Mode (Headed)  set  headless: false, // Set to false for UI mode in main.spec.js
-Command for run: node main.spec.js 
-For run in background (Headless) need to make     headless: true in main.spec.js and command to run the script: : node main.spec.js 
+For run the script with UI Mode (Headed):
+  set  headless: false, // Set to false for UI mode in main.spec.js
+  Command for run: node main.spec.js 
+For run in background (Headless) need to make:
+     headless: true in main.spec.js and 
+     Command to run the script: : node main.spec.js 
 
-
+**N.B** RT CMS SSO login,need to give Authenticate code to login in the CMS portal
