@@ -24,7 +24,7 @@ const { log } = require('console');
   const page = await context.newPage();
 
   // Navigate to the website
-  await page.goto('https://uat-campaign.bkash.com/');
+  await page.goto('//URL');
 
   // Initialize the LogIn and Milestone classes
   const logIn = new LogIn(page);
