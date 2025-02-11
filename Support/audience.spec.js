@@ -18,13 +18,13 @@ class Audience {
 
    
       
-        await this.page.fill('//input[@placeholder="Audience Name"]', '108. SNS Automated Audience');
+        await this.page.fill('//input[@placeholder="Audience Name"]', '114. SNS Automated Audience');
         await this.page.waitForTimeout(1000);
   
         // const aObj = data.Objective || 'CSV file value not found'; // Fallback if missing
         // const aSrv = data.Service || 'CSV file value not found'; // Fallback if missing
   
-        await this.page.fill('//input[@placeholder="Description"]', '108. SNS Automated Audience');
+        await this.page.fill('//input[@placeholder="Description"]', '114. SNS Automated Audience');
         await this.page.waitForTimeout(1000);
         const aType = await this.page.locator('//select[@name="audienceType"]');
 
@@ -83,19 +83,15 @@ class Audience {
         await this.page.waitForTimeout(3000);
         await this.page.fill('//input[@placeholder="TG"]', '90');
         await this.page.waitForTimeout(2000);
-        console.log("Check 1");
         const finalSubmit = await this.page.locator('//button[@type="submit"][normalize-space()="Submit"]');
         await finalSubmit.click()
-        console.log("Check 2");
         await this.page.waitForTimeout(4000);
-        console.log("Check 2");
 
         // Validate Audience submission
         const element = await this.page.locator('//span[@id="client-snackbar"]');
         const isVisible = await element.isVisible();
         if (isVisible) {
-           console.log("Error is showing");
-           console.error(`Error while creating Drone Admin: ${error.message}`);
+           console.log("Error is showing in Audience Builder");
            const screenshotPath = `./Screenshots/error-audience-builder-${Date.now()}.png`;
            await this.page.screenshot({ path: screenshotPath, fullPage: true });  // Ensure full-page screenshot
            console.log(`Screenshot taken for Audience Builder error: ${screenshotPath}`);
