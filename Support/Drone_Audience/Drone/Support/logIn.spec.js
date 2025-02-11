@@ -11,13 +11,13 @@ class LogIn {
         {
           const element = await this.page.locator('//input[@id="i0116"]');
           await element.click();
-          await this.page.fill('//input[@id="i0116"]', 'sakiba.audacityit@bkash.com');
+          await this.page.fill('//input[@id="i0116"]', '//UserName');
           const next = await this.page.locator('//input[@id="idSIButton9"]');
           await next.click();
-          await this.page.fill('//input[@id="i0116"]', 'sakiba.audacityit@bkash.com');
+          await this.page.fill('//input[@id="i0116"]', '//UserName');
           const pass = await this.page.locator('//input[@id="i0118"]');
           await pass.click();
-          await this.page.fill('//input[@id="i0118"]', 'Zahin@123456789');
+          await this.page.fill('//input[@id="i0118"]', '//Password');
 
           const signIn = await this.page.locator('//input[@id="idSIButton9"]');
           await signIn.click();
