@@ -34,11 +34,11 @@ class Drone {
         const aSrv = data.Service || 'CSV file value not found'; // Fallback if missing
         const aName= data.Name || 'CSV file value not found';
         await this.addDroneAdmin(aName,aObj, aSrv);
-        console.log(aName+ " Campaign in Admin Created and Submitted Successfully!");
+        
       } 
       catch (error) {
         const aName= data.Name || 'CSV file value not found';
-        console.error(`Error while creating Drone Admin: ${error.message}`);
+        console.error(`Catch Block Error while creating Drone Admin: ${error.message}`);
         const screenshotPath = `./Screenshots/error-drone-admin-${Date.now()}.png`;
         await this.page.screenshot({ path: screenshotPath });
         console.log(`Screenshot taken for Drone Admin error: ${screenshotPath}`);
@@ -79,55 +79,48 @@ class Drone {
   
   
   // Other methods in Milestone class will remain the same
-  async addDroneAdmin(aName,aObj,aSrv) {
+  async addDroneAdmin(aName, aObj, aSrv) {
     console.log('Drone Admin Page is showing');
-    await this.page.waitForTimeout(3000);
 
-    const Obj = await this.page.locator('select[name="objective"]');
+    try {
+        await this.page.waitForTimeout(3000);
 
-    await Obj.selectOption({ value: aObj });
-    await this.page.waitForTimeout(1000);  
-        
-    const Ser = await this.page.locator('select[name="serviceTypeCode"]');
+        const Obj = this.page.locator('select[name="objective"]');
+        await Obj.selectOption({ value: aObj });
+        await this.page.waitForTimeout(1000);  
 
-    //await this.page.waitForTimeout(2000);
-    console.log(aSrv);
-    await Ser.selectOption({ label: aSrv });
-    
-    await this.page.waitForTimeout(1000);
-     
-    // const Aud = await this.page.locator('select[name="audienceId"]');
+        const Ser = this.page.locator('select[name="serviceTypeCode"]');
+        console.log(aSrv);
+        await Ser.selectOption({ label: aSrv });
+        await this.page.waitForTimeout(1000);
 
-    // await Aud.selectOption({ value: '2470' });
-    const Aud = await this.page.locator('select[name="audienceId"]');
-    await Aud.selectOption({ index: 1 }); // Selects the first valid option
+        const Aud = this.page.locator('select[name="audienceId"]');
+        await Aud.selectOption({ index: 1 }); // Selects the first valid option
+        await this.page.waitForTimeout(1000);
 
-    await this.page.waitForTimeout(1000);
+        const asubmit = this.page.locator('//button[normalize-space()="Submit"]');
+        await asubmit.click();
+        await this.page.waitForTimeout(4000);  
 
-      
-    const asubmit = await this.page.locator('//button[normalize-space()="Submit"]');
-    await asubmit.click();
-    await this.page.waitForTimeout(3000);  
-    
-    const element = await this.page.locator('//span[@id="client-snackbar"]');
-    const isVisible = await element.isVisible();
-    if (isVisible) {
-        console.log("Error is showing");
-        console.error(`Error while creating Drone Admin: ${error.message}`);
-        const screenshotPath = `./Screenshots/error-audience-builder-${Date.now()}.png`;
-        await this.page.screenshot({ path: screenshotPath, fullPage: true });  // Ensure full-page screenshot
-        console.log(`Screenshot taken for Audience Builder error: ${screenshotPath}`);
-        this.report.logResult(aName + " Drone Admin Creation failed", "FAILED", error.message);
+        // Check for error message
+        const element = this.page.locator('//span[@id="client-snackbar"]');
+        if (await element.isVisible()) {
+            console.log("Error is showing");
+            const screenshotPath = `./Screenshots/error-Drone-Admin-${Date.now()}.png`;
+            await this.page.screenshot({ path: screenshotPath, fullPage: true });
+            console.log(`Screenshot taken for Drone Admin error: ${screenshotPath}`);
+            this.report.logResult(`${aName} Drone Admin Creation failed`, "FAILED", "Error while submitting Drone Admin");
+        } else {
+            console.log(aName + " Drone Admin Combination Submitted Successfully");
+            this.report.logResult(`${aName} Drone Admin Combination Submitted Successfully`, "PASSED", "");
+        }
 
+    } catch (error) {
+        console.error(`Unexpected error in addDroneAdmin: ${error.message}`);
+        this.report.logResult(`${aName} Drone Admin Creation failed due to an unexpected error`, "FAILED", error.message);
     }
-    else {
-        console.log("Drone Admin Combination Submitted Succesfully");
-        this.report.logResult(aName + " Drone Admin Combination Submitted Succesfull", "PASSED", error.message);
+}
 
-        
-      }
-
-  }
 
   async addDroneCampaign(cName,cObj,cSrv) {
     console.log('Add Drone Campaign Page is showing');
